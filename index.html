@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Petit Player Demo</title>
+		<style>
+				#demo-player-2 section div,
+				#demo-player section div {
+				  width: 10vmin;
+				  height: 10vmin;
+				  margin: calc(10vmin / 5) 0;
+				}
+				div#line {
+				  background: #dd9f3c;
+				  clip-path: polygon(48% 0%, 52% 0%, 52% 100%, 48% 100%);
+				}
+				div.triangle {
+				  background: #ccaa3c;
+				  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+				}
+				div#square {
+				  background: #bbbb3c;
+				  clip-path: none;
+				}
+				div#pentagone {
+				  background: #aacc3c;
+				  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+				}
+				div#hexablink {
+				  background: #99dd3c;
+				  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+				}
+				body {
+				 
+				}
+				* {
+				  box-sizing: border-box;
+				}
+		</style>
+	</head>
+	<body>
+		<h2>Demo</h2>
+		<petit-player id="demo-player" poster="100" src="data:application/json;base64,ewoJIm5tIjogIkV4YW1wbGUgb2YgYW5pbWF0aW9uIiwKCSJ2IjogIjAuMSIsCgkiaXAiOiAwLAoJIm9wIjogMTc1LAoJImZyIjogMjQsCgkibGF5ZXJzIjogWwoKCQl7IAoJCQkic2VsIjoiI2xpbmUiLCAKCQkJImtmIjogWwoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoMCkgcm90YXRlKDBkZWcpIiwgImVhc2luZyI6ICJjdWJpYy1iZXppZXIoMCwuNSwxLC41KSIsICJrZnQiOjB9LAoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoOTB2dykgcm90YXRlKDI3MDBkZWcpIiwgImVhc2luZyI6ICJjdWJpYy1iZXppZXIoMCwuNSwxLC41KSIsICJrZnQiOjgwfQoJCQldCgkJfSx7IAoJCQkic2VsIjoiLnRyaWFuZ2xlIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDApIHJvdGF0ZSgwZGVnKSIsICJrZnQiOjIwfSwKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDkwdncpIHJvdGF0ZSgyNzAwZGVnKSIsICJiYWNrZ3JvdW5kIjoiIzU1NSIsICJrZnQiOjEwMH0KCQkJXQoJCX0seyAKCQkJInNlbCI6IiNzcXVhcmUiLCAKCQkJImtmIjogWwoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoMCkgcm90YXRlKDBkZWcpIiwgImtmdCI6NDB9LAoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoOTB2dykgcm90YXRlKDI3MDBkZWcpIiwgImtmdCI6MTIwfQoJCQldLCAKCQkJInQiOiB7CgkJCQkiZHVyYXRpb24iOiAzMzYwLCAKCQkJCSJmaWxsIjogImZvcndhcmRzIiwgCgkJCQkiZGVsYXkiOiAxNjgwLCAKCQkJCSJlbmREZWxheSI6IDE2ODAKCQkJCgkJCX0KCQl9LHsgCgkJCSJzZWwiOiIjcGVudGFnb25lIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDApIHJvdGF0ZSgwZGVnKSIsICJrZnQiOjYwfSwKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDkwdncpIHJvdGF0ZSgyNzAwZGVnKSIsICJiYWNrZ3JvdW5kIjoicmVkIiwgImtmdCI6MTQwfQoJCQldCgkJfSx7IAoJCQkic2VsIjoiI2hleGFibGluayIsIAoJCQkia2YiOiBbCgkJCQkJIHsib3BhY2l0eSI6MCwgImVhc2luZyI6ICJlYXNlLWluLW91dCIsICJrZnQiOjB9LAoJCQkJCSB7Im9wYWNpdHkiOjEsICJrZnQiOjEwMH0KCQkJXSwgCgkJCSJ0IjogewoJCQkJImR1cmF0aW9uIjogNTAwLCAKCQkJCSJmaWxsIjogImJvdGgiLCAKCQkJCSJkZWxheSI6IDAsIAoJCQkJImRpcmVjdGlvbiI6ImFsdGVybmF0ZS1yZXZlcnNlIiwKCQkJCSJpdGVyYXRpb25zIjogIkluZmluaXR5IgoJCQkKCQkJfQoJCX0seyAKCQkJInNlbCI6IiNoZXhhZ29uZSIsIAoJCQkia2YiOiBbCgkJCQkJIHsidHJhbnNmb3JtIjoidHJhbnNsYXRlWCgwKSByb3RhdGUoMGRlZykiLCAiZWFzaW5nIjogImVhc2UtaW4tb3V0IiwgImtmdCI6ODB9LAoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoOTB2dykgcm90YXRlKDI3MDBkZWcpIiwgImtmdCI6MTYwfQoJCQldCgkJIH0seyAKCQkJInNlbCI6IiNzcHJpbmciLCAKCQkJImtmIjogWwoJCQkJCSB7ImtmdCI6NzV9LAoJCQkJCSB7ImtmdCI6OTV9LAoJCQkJCSB7ImtmdCI6MTE1fSwKCQkJCQkgeyJrZnQiOjEzNX0sCgkJCQkJIHsia2Z0IjoxNTV9CgkJCV0KCQl9LHsgCgkJCSJzZWwiOiIjd2F0ZXJkcm9wIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJrZnQiOjB9LAoJCQkJCSB7ImtmdCI6MjB9LAoJCQkJCSB7ImtmdCI6NDB9LAoJCQkJCSB7ImtmdCI6NjB9LAoJCQkJCSB7ImtmdCI6ODB9CgkJCQldCgkJfSx7IAoJCQkic2VsIjoiI2NvdW50aW5nIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJrZnQiOjB9CgkJCQldCgkJfQoJXQp9">
+			<style>
+				#petit-controls button {
+					background: white;
+					border-radius: 4px;
+				}
+			</style>
+			<section>
+				<div id="line"></div>
+				<div class="triangle"></div>
+				<div class="triangle"></div>
+				<div id="square"></div>
+				<div id="pentagone"></div>
+				<div id="hexagone">
+					<div id="hexablink"></div>
+				</div>
+				<audio preload="auto" id="space" src="./assets/space.mp3"></audio>	
+				<audio preload="auto" id="spring" src="./assets/spring.mp3"></audio>
+				<audio preload="auto" id="waterdrop" src="./assets/waterdrop.mp3"></audio>
+				<audio preload="auto" id="counting" src="./assets/counting.mp3">https://soundbible.com/2008-0-9-Male-Vocalized.html @: Mike Koenig License: Attribution 3.0</audio>			
+			</section>
+		</petit-player>
+		
+		<h2>Demo 2 </h2>
+		<petit-player id="demo-player-2" muted src="../assets/demo.json" autoplay loop>
+			<style>
+				#petit-controls button {
+					background: black;
+					color:white;
+					border-radius: 4px;
+				}
+			</style>
+			<section slot="aftercontrols">
+				<div id="line"></div>
+				<div class="triangle"></div>
+				<div class="triangle"></div>
+				<div id="square"></div>
+				<div id="pentagone"></div>
+				<div id="hexagone">
+					<div id="hexablink"></div>
+				</div>
+				<audio preload="auto" id="space" src="./assets/space.mp3"></audio>	
+				<audio preload="auto" id="spring" src="./assets/spring.mp3"></audio>
+				<audio preload="auto" id="waterdrop" src="./assets/waterdrop.mp3"></audio>
+				<audio preload="auto" id="counting" src="./assets/counting.mp3">https://soundbible.com/2008-0-9-Male-Vocalized.html @: Mike Koenig License: Attribution 3.0</audio>			
+			</section>
+		</petit-player>
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>
