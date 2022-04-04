@@ -60,9 +60,10 @@ export class PetitPlayer extends HTMLElement{
 		shadowRoot.appendChild(template.content.cloneNode(true));
 		const userStyle = this.querySelector("style");
 		const shadowStyle = document.createElement('style');
-		shadowStyle.innerHTML = userStyle.innerHTML;
-		shadowRoot.appendChild(shadowStyle);
-
+		if(userStyle) {
+			shadowStyle.innerHTML = userStyle.innerHTML;
+			shadowRoot.appendChild(shadowStyle);
+		}
 		this.version=0.1;			
 
 		let src = this.getAttribute("src");		

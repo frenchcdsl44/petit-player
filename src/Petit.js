@@ -9,7 +9,7 @@ export default class Petit {
 		//this.oldT= -1;
 		this.normalSpeed = Math.round( 1000/petit.fr );
 
-		petit.layers.forEach((elCollection, i) => {
+		petit.layers?.forEach((elCollection, i) => {
 			const els = playerEl.querySelectorAll(elCollection.sel);
 			let animArray = []
 			
@@ -53,13 +53,12 @@ export default class Petit {
 		});
 		//console.log("timings", this.timings, this.animations);
 
-		this.animations[0].onfinish = () => {
+		this.animations[0].addEventListener("finish", () => {
 			this.isPlaying = false;		  	
 		  	playerEl.dispatchEvent(
 				new CustomEvent("finished")
 			);
-			console.log("finished");
-		};
+		});
 	}
 
 	//TODO:this.animations[0].statettt instead of this.isPlaying
