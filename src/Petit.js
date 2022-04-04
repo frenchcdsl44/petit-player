@@ -7,7 +7,7 @@ export default class Petit {
 		//this.timings = [];
 		this.isPlaying = false;
 		//this.oldT= -1;
-		this.normalSpeed = Math.round( 1000/petit.fr );
+		this.normalSpeed = Math.round( 1000/( petit.fr ? petit.fr : 60 ) );
 
 		petit.layers?.forEach((elCollection, i) => {
 			const els = playerEl.querySelectorAll(elCollection.sel);
@@ -52,6 +52,9 @@ export default class Petit {
 			}); 
 		});
 		//console.log("timings", this.timings, this.animations);
+		petit.events?.forEach((elCollection, i) => {
+			//TODO
+		});
 
 		this.animations[0].addEventListener("finish", () => {
 			this.isPlaying = false;		  	
