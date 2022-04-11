@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Petit Player Demo</title>
 		<style>
+				#div-el section div,
 				#demo-player-2 section div,
 				#demo-player section div {
 				  width: 10vmin;
@@ -47,7 +48,22 @@
 	</head>
 	<body>
 		<h2>Demo</h2>
-			<div>TODO petit without player</div>
+			<div id="div-el">TODO petit without player
+				<section>
+					<div id="line"></div>
+					<div class="triangle"></div>
+					<div class="triangle"></div>
+					<div id="square"></div>
+					<div id="pentagone"></div>
+					<div id="hexagone">
+						<div id="hexablink"></div>
+					</div>
+					<audio preload="auto" id="space" src="./space.mp3"></audio>	
+					<audio preload="auto" id="spring" src="./spring.mp3"></audio>
+					<audio preload="auto" id="waterdrop" src="./waterdrop.mp3"></audio>
+					<audio preload="auto" id="counting" src="./counting.mp3">https://soundbible.com/2008-0-9-Male-Vocalized.html @: Mike Koenig License: Attribution 3.0</audio>			
+				</section>
+			</div>
 		<h2>Demo</h2>	
 		<petit-player id="demo-player" poster="100" src="data:application/json;base64,ewoJIm5tIjogIkV4YW1wbGUgb2YgYW5pbWF0aW9uIiwKCSJ2IjogIjAuMSIsCgkiaXAiOiAwLAoJIm9wIjogMTc1LAoJImZyIjogMjQsCgkibGF5ZXJzIjogWwoKCQl7IAoJCQkic2VsIjoiI2xpbmUiLCAKCQkJImtmIjogWwoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoMCkgcm90YXRlKDBkZWcpIiwgImVhc2luZyI6ICJjdWJpYy1iZXppZXIoMCwuNSwxLC41KSIsICJrZnQiOjB9LAoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoOTB2dykgcm90YXRlKDI3MDBkZWcpIiwgImVhc2luZyI6ICJjdWJpYy1iZXppZXIoMCwuNSwxLC41KSIsICJrZnQiOjgwfQoJCQldCgkJfSx7IAoJCQkic2VsIjoiLnRyaWFuZ2xlIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDApIHJvdGF0ZSgwZGVnKSIsICJrZnQiOjIwfSwKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDkwdncpIHJvdGF0ZSgyNzAwZGVnKSIsICJiYWNrZ3JvdW5kIjoiIzU1NSIsICJrZnQiOjEwMH0KCQkJXQoJCX0seyAKCQkJInNlbCI6IiNzcXVhcmUiLCAKCQkJImtmIjogWwoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoMCkgcm90YXRlKDBkZWcpIiwgImtmdCI6NDB9LAoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoOTB2dykgcm90YXRlKDI3MDBkZWcpIiwgImtmdCI6MTIwfQoJCQldLCAKCQkJInQiOiB7CgkJCQkiZHVyYXRpb24iOiAzMzYwLCAKCQkJCSJmaWxsIjogImZvcndhcmRzIiwgCgkJCQkiZGVsYXkiOiAxNjgwLCAKCQkJCSJlbmREZWxheSI6IDE2ODAKCQkJCgkJCX0KCQl9LHsgCgkJCSJzZWwiOiIjcGVudGFnb25lIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDApIHJvdGF0ZSgwZGVnKSIsICJrZnQiOjYwfSwKCQkJCQkgeyJ0cmFuc2Zvcm0iOiJ0cmFuc2xhdGVYKDkwdncpIHJvdGF0ZSgyNzAwZGVnKSIsICJiYWNrZ3JvdW5kIjoicmVkIiwgImtmdCI6MTQwfQoJCQldCgkJfSx7IAoJCQkic2VsIjoiI2hleGFibGluayIsIAoJCQkia2YiOiBbCgkJCQkJIHsib3BhY2l0eSI6MCwgImVhc2luZyI6ICJlYXNlLWluLW91dCIsICJrZnQiOjB9LAoJCQkJCSB7Im9wYWNpdHkiOjEsICJrZnQiOjEwMH0KCQkJXSwgCgkJCSJ0IjogewoJCQkJImR1cmF0aW9uIjogNTAwLCAKCQkJCSJmaWxsIjogImJvdGgiLCAKCQkJCSJkZWxheSI6IDAsIAoJCQkJImRpcmVjdGlvbiI6ImFsdGVybmF0ZS1yZXZlcnNlIiwKCQkJCSJpdGVyYXRpb25zIjogIkluZmluaXR5IgoJCQkKCQkJfQoJCX0seyAKCQkJInNlbCI6IiNoZXhhZ29uZSIsIAoJCQkia2YiOiBbCgkJCQkJIHsidHJhbnNmb3JtIjoidHJhbnNsYXRlWCgwKSByb3RhdGUoMGRlZykiLCAiZWFzaW5nIjogImVhc2UtaW4tb3V0IiwgImtmdCI6ODB9LAoJCQkJCSB7InRyYW5zZm9ybSI6InRyYW5zbGF0ZVgoOTB2dykgcm90YXRlKDI3MDBkZWcpIiwgImtmdCI6MTYwfQoJCQldCgkJIH0seyAKCQkJInNlbCI6IiNzcHJpbmciLCAKCQkJImtmIjogWwoJCQkJCSB7ImtmdCI6NzV9LAoJCQkJCSB7ImtmdCI6OTV9LAoJCQkJCSB7ImtmdCI6MTE1fSwKCQkJCQkgeyJrZnQiOjEzNX0sCgkJCQkJIHsia2Z0IjoxNTV9CgkJCV0KCQl9LHsgCgkJCSJzZWwiOiIjd2F0ZXJkcm9wIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJrZnQiOjB9LAoJCQkJCSB7ImtmdCI6MjB9LAoJCQkJCSB7ImtmdCI6NDB9LAoJCQkJCSB7ImtmdCI6NjB9LAoJCQkJCSB7ImtmdCI6ODB9CgkJCQldCgkJfSx7IAoJCQkic2VsIjoiI2NvdW50aW5nIiwgCgkJCSJrZiI6IFsKCQkJCQkgeyJrZnQiOjB9CgkJCQldCgkJfQoJXQp9">
 
@@ -85,5 +101,31 @@
 			</section>
 		</petit-player>
 		<script type="module" src="/main.js"></script>
+		<script type="module">
+			import Petit from './src/Petit.js'
+				
+						
+		  	let myPetit =  new Petit( document.getElementById('div-el'), {
+			
+				"nm": "Example of animation",
+				"v": "0.1",
+				"ip": 0,
+				"op": 175,
+				"fr": 24,
+				"layers": [
+
+					{ 
+						"sel":"#line", 
+						"kf": [
+								 {"transform":"translateX(0) rotate(0deg)", "easing": "cubic-bezier(0,.5,1,.5)", "kft":0},
+								 {"transform":"translateX(90vw) rotate(2700deg)", "easing": "cubic-bezier(0,.5,1,.5)", "kft":80}
+						]
+					}
+				]
+			})
+			myPetit.playAll();
+			console.log(Petit);
+			console.log(myPetit);
+		</script>
 	</body>
 </html>

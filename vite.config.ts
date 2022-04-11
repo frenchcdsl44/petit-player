@@ -1,5 +1,6 @@
 // vite.config.ts
 import { defineConfig } from 'vitest/config'
+const path = require('path')
 
 export default defineConfig({
 	test: {
@@ -10,8 +11,21 @@ export default defineConfig({
 	coverage: {
 		reporter: ['text', 'json', 'html'],
 	},
-	esbuild: {
-		//minify: false,
-		//minifySyntax: false
-	},
+	build:{
+		minify: true,
+		emptyOutDir:false,
+		lib:
+		//[
+			{
+				entry: path.resolve(__dirname, 'src/Petit.js'),
+				name: 'Petit',
+				fileName: (format) => `Petit.${format}.js`
+			},
+			/*{
+				entry: path.resolve(__dirname, 'src/PetitPlayer.js'),
+				name: 'PetitPlayer',
+				fileName: (format) => `PetitPlayer.${format}.min.js`
+			}*/
+		//]
+	}
 })
