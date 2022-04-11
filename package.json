@@ -1,7 +1,7 @@
 {
   "name": "petit-player",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -17,5 +17,28 @@
   },
   "dependencies": {
     "petitjs": "^0.0.1"
-  }
+  },
+  "description": "A player for the web animation api stored in a json format called petit",
+  "main": "dist/PetitPlayer.es.min.js ",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frenchcdsl44/petit-player.git"
+  },
+  "keywords": [
+    "animation",
+    "api",
+    "svg",
+    "web",
+    "game",
+    "engine"
+  ],
+  "author": "frenchcdsl44 <bobobopaup@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frenchcdsl44/petit-player/issues"
+  },
+  "homepage": "https://github.com/frenchcdsl44/petit-player#readme"
 }
