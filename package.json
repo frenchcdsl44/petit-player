@@ -14,5 +14,8 @@
     "jsdom": "^19.0.0",
     "vite": "^2.8.0",
     "vitest": "^0.8.1"
+  },
+  "dependencies": {
+    "petitjs": "^0.0.1"
   }
 }

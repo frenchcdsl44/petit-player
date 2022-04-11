@@ -1,7 +1,11 @@
 // @vitest-environment jsdom
-import Petit from '../src/Petit.js'
+//import PetitPlayer from '../src/PetitPlayer.js'
 import {KeyframeEffect, Animation}  from '../test/Mock.js'//only use for testing
 import { vi, assert, expect, test } from 'vitest'
+import Petit from 'petitjs'
+
+vi.stubGlobal('KeyframeEffect', KeyframeEffect);
+vi.stubGlobal('Animation', Animation);
 
 
 const div = document.createElement('div');

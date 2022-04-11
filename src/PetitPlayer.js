@@ -1,5 +1,5 @@
 import PetitAudio from './PetitAudio.js'  	
-import Petit from './Petit.js'
+import Petit from 'petitjs'
 
 function isNumeric(str) {
 	if (typeof str != "string") return false 
