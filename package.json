@@ -19,7 +19,7 @@
     "petitjs": "^0.0.1"
   },
   "description": "A player for the web animation api stored in a json format called petit",
-  "main": "dist/PetitPlayer.es.min.js ",
+  "main": "dist/PetitPlayer.es.min.js",
   "directories": {
     "test": "test"
   },
