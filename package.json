@@ -1,7 +1,7 @@
 {
   "name": "petit-player",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -20,9 +20,6 @@
   },
   "description": "A player for the web animation api stored in a json format called petit",
   "main": "dist/PetitPlayer.es.min.js",
-  "directories": {
-    "test": "test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/frenchcdsl44/petit-player.git"
