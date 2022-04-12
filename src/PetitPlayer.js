@@ -234,7 +234,7 @@ export class PetitPlayer extends HTMLElement{
 			this.shadowRoot.appendChild (shadowError);
 	}
 	play(){
-		if(this.poster!=null && isNumeric(this.poster)){
+		if(this.poster!=null && isNumeric(this.poster) && this.scrub.value==0){
 			this.myPetit.animations.forEach(animation => {
 				animation.currentTime =0;
 			});
