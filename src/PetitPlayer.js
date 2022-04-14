@@ -71,7 +71,7 @@ export class PetitPlayer extends HTMLElement{
 				  --playerbuttontext: white;
 				}
 		*/
-		this.version="0.0.2";	
+		this.version="0.0.3";	
 		this.getSrc();		
 	}
 	getSrc() {
@@ -273,7 +273,12 @@ export class PetitPlayer extends HTMLElement{
 		this.shadowRoot.querySelector("#petit-controls").style.display = 'none';
 	}
 	
-	
+	setAnimations(val) {
+		this.myPetit.animations.forEach(animation => {
+			animation.currentTime = val;
+		});
+		this.adjustScrubber() 
+	}
         
 	adjustScrubber() {
 		let ct = this.myPetit.animations[0].currentTime;
