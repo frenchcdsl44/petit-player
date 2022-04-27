@@ -4,7 +4,7 @@
 	"ip": 0,
 	"op": 175,
 	"fr": 24,
-	"layers": [
+	"layers":[
 
 		{ 
 			"sel":"#line", 
@@ -17,6 +17,9 @@
 			"kf": [
 					 {"transform":"translateX(0) rotate(0deg)", "kft":20},
 					 {"transform":"translateX(90vw) rotate(2700deg)", "background":"#555", "kft":100}
+			],
+			"on":[
+				{"e":"click", "trigger":"canplay"}
 			]
 		},{ 
 			"sel":"#square", 

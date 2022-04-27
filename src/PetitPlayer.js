@@ -134,7 +134,7 @@ export class PetitPlayer extends HTMLElement{
 			this.addEventListener("pause", ()=>{
 				this.playButton.innerHTML = ">";
 			});
-			this.addEventListener("finished", ()=>{
+			this.addEventListener("ended", ()=>{
 				this.playButton.innerHTML = ">";
 			});
 
@@ -184,7 +184,7 @@ export class PetitPlayer extends HTMLElement{
 			}
 			
 			if(this.getAttribute("loop")!=null){
-				this.addEventListener("finished",  this.play);
+				this.addEventListener("ended",  this.play);
 			}
 			this.poster = this.getAttribute("poster");
 			if(this.poster!=null && isNumeric(this.poster)){
@@ -192,7 +192,7 @@ export class PetitPlayer extends HTMLElement{
 			}
 			
 
-
+			//TODO dispatch ready
 			
 
 			
@@ -286,6 +286,7 @@ export class PetitPlayer extends HTMLElement{
 		cancelAnimationFrame(this.timer);	
 		if (this.myPetit.isPlaying) {
 			this.dispatchEvent(
+				//TODO harmonize detail with changescrub
 				new CustomEvent("seek", {detail:{time : parseInt(this.scrub.value)}})
 			);
 			this.timer = requestAnimationFrame(() => this.adjustScrubber());
@@ -296,7 +297,7 @@ export class PetitPlayer extends HTMLElement{
 	/*
 autoplay	autoplay	Specifies that the petit will start playing as soon as it is ready
 controls	if controls="false"	Specifies that petit controls should be displayed (such as a play/pause button etc).
-loop	loop	Specifies that the petit will start over again, every time it is finished
+loop	loop	Specifies that the petit will start over again, every time it is ended
 muted	muted	Specifies that the audio output of the petit should be muted
 src	URL	Specifies the URL of the petit file
 poster	int	Specifies an frame to be shown until the user hits the play button	
@@ -328,6 +329,7 @@ TODO make the attributes dynamic :
 						this.pause();
 					}
 				break;
+				//TODO set poster in petit.json
 				case 'poster':
 					if(newValue && isNumeric(newValue)){
 						this.poster=newValue;
@@ -339,10 +341,10 @@ TODO make the attributes dynamic :
 				break;				
 				case 'loop':
 					if(newValue && newValue!="false") {
-						this.addEventListener("finished",  this.play);
+						this.addEventListener("ended",  this.play);
 					}
 					else {
-						this.removeEventListener("finished", this.play );
+						this.removeEventListener("ended", this.play );
 					}
 				break;				
 				case 'controls':
