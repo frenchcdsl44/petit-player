@@ -9,10 +9,10 @@ export default class PetitAudio {
    	petitPlayer.addEventListener("rebase", ()=>{
 			this.rebaseAll();
 		});			
-		petitPlayer.addEventListener("finished", ()=>{
+		petitPlayer.addEventListener("ended", ()=>{
 			this.rebaseAll();
 		  	this.state = "paused";
-			console.log("finished");
+			//console.log("audio finished");
 		});
 		petitPlayer.addEventListener("pause", ()=>{
 			this.pauseAll();

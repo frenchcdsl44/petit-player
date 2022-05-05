@@ -1,11 +1,12 @@
 import PetitAudio from './PetitAudio.js'  	
 import Petit from 'petitjs'
 
-function isNumeric(str) {
+/*function isNumeric(str) {
 	if (typeof str != "string") return false 
 	return !isNaN(str) && !isNaN(parseFloat(str))
-}
+}*/
 
+//TODO allow any html element https://www.geeksforgeeks.org/what-are-custom-attributes-in-html5/
 
 export class PetitPlayer extends HTMLElement{
 	constructor() {
@@ -93,7 +94,7 @@ export class PetitPlayer extends HTMLElement{
 			*/		
 			// Do something with the response
 			
-			const pa = new PetitAudio(this, Math.round( 1000/petit.fr ) );
+			const pa = new PetitAudio(this, 1000/petit.fr ); 
 			this.myPetit =  new Petit(this, petit);
 			
 			this.timer = null;
@@ -137,10 +138,8 @@ export class PetitPlayer extends HTMLElement{
 			this.addEventListener("ended", ()=>{
 				this.playButton.innerHTML = ">";
 			});
-
-			console.log("TODO replace myPetit");		
 					
-			//Check for support... You can the polyfill so this won't actually be triggered
+			//Check for support... You can use the polyfill so this won't actually be triggered
 			if (!document.body.animate) {
 			  this.shadowRoot.querySelector(".support").classList.add("unsupported");
 			}
@@ -168,7 +167,7 @@ export class PetitPlayer extends HTMLElement{
 					new CustomEvent("rebase")
 				);	
 				this.dispatchEvent(
-					new CustomEvent("changescrub", {detail:  parseInt(this.scrub.value) })
+					new CustomEvent("changescrub", {detail:{time : parseInt(this.scrub.value)}})
 				);		
 				this.adjustScrubber();
 				if (this.myPetit.isPlaying) {
@@ -186,15 +185,10 @@ export class PetitPlayer extends HTMLElement{
 			if(this.getAttribute("loop")!=null){
 				this.addEventListener("ended",  this.play);
 			}
-			this.poster = this.getAttribute("poster");
-			if(this.poster!=null && isNumeric(this.poster)){
-				this.setPoster(this.poster)
+			//this.poster = ( ? this.getAttribute("poster") : ( ? : ) )  ;
+			if(this.getAttribute("poster")!=null/* && isNumeric(this.poster)*/){
+				this.myPetit.setPoster(this.getAttribute("poster"))
 			}
-			
-
-			//TODO dispatch ready
-			
-
 			
 			
 			
@@ -234,17 +228,18 @@ export class PetitPlayer extends HTMLElement{
 			this.shadowRoot.appendChild (shadowError);
 	}
 	play(){
-		if(this.poster!=null && isNumeric(this.poster) && this.scrub.value==0){
+		/*if(this.poster!=null && isNumeric(this.poster) && this.scrub.value==0){
 			this.myPetit.animations.forEach(animation => {
 				animation.currentTime =0;
 			});
-		}
+		}*/
 		this.myPetit.isPlaying = true;
 		this.myPetit.playAll();
 		this.adjustScrubber();
 	}
 	pause(){
 		this.myPetit.pauseAll();
+		this.adjustScrubber();
 	}
 	
 	mute(){
@@ -261,11 +256,11 @@ export class PetitPlayer extends HTMLElement{
 			new CustomEvent("unmute")
 		);
 	}
-   setPoster(kf){
+/*   setPoster(kf){
 		this.myPetit.animations.forEach(animation => {
 			animation.currentTime = +this.poster*this.myPetit.normalSpeed;
 		});
-	}
+	}*/
 	showControls(){
 		this.shadowRoot.querySelector("#petit-controls").style.display = 'flex';
 	}
@@ -274,6 +269,9 @@ export class PetitPlayer extends HTMLElement{
 	}
 	
 	setAnimations(val) {
+		if(!this.myPetit.isPlaying) {
+			this.myPetit.pauseAll();
+		}
 		this.myPetit.animations.forEach(animation => {
 			animation.currentTime = val;
 		});
@@ -286,7 +284,6 @@ export class PetitPlayer extends HTMLElement{
 		cancelAnimationFrame(this.timer);	
 		if (this.myPetit.isPlaying) {
 			this.dispatchEvent(
-				//TODO harmonize detail with changescrub
 				new CustomEvent("seek", {detail:{time : parseInt(this.scrub.value)}})
 			);
 			this.timer = requestAnimationFrame(() => this.adjustScrubber());
@@ -301,7 +298,6 @@ loop	loop	Specifies that the petit will start over again, every time it is ended
 muted	muted	Specifies that the audio output of the petit should be muted
 src	URL	Specifies the URL of the petit file
 poster	int	Specifies an frame to be shown until the user hits the play button	
-TODO make the attributes dynamic :
 	*/
 	
 	static get observedAttributes() { return ['src', 'muted', 'autoplay', 'controls', 'loop', 'poster']; }	
@@ -331,9 +327,9 @@ TODO make the attributes dynamic :
 				break;
 				//TODO set poster in petit.json
 				case 'poster':
-					if(newValue && isNumeric(newValue)){
-						this.poster=newValue;
-						this.setPoster(newValue);
+					if(newValue/* && isNumeric(newValue)*/){
+						//this.poster=newValue;
+						this.myPetit.setPoster(newValue);
 					}	
 				break;
 				case 'src':
