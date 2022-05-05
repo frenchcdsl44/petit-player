@@ -1,7 +1,7 @@
 {
   "name": "petit-player",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.8",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

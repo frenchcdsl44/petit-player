@@ -32,7 +32,7 @@ export default class PetitAudio {
 			}
 		});	
    	petitPlayer.addEventListener("changescrub", (event)=>{
-			this.changeScrub(event.detail);
+			this.changeScrub(event.detail.time);
 		});	
 		petitPlayer.addEventListener("mute", ()=>{
 			this.muteAll(true);
