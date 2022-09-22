@@ -130,7 +130,7 @@ export class PetitPlayer extends HTMLElement{
 
 		//when the input range ("scrubber") is adjusted, pause the animations and change the `currentTime` property
 		this.scrub.addEventListener('input', e => {
-			console.log('input', e.currentTarget.value);
+			//console.log('input', e.currentTarget.value);
 			var time = e.currentTarget.value;
 			
 			this.myPetit.animations.forEach(animation => {
@@ -142,7 +142,7 @@ export class PetitPlayer extends HTMLElement{
 		});
 		//When the user finalizes the value for input range ("scrubber")... 
 		this.scrub.addEventListener("change", (e) => {
-			console.log("change", e.currentTarget.value);
+			//console.log("change", e.currentTarget.value);
 			if (this.myPetit.animations[0].currentTime >= e.currentTarget.getAttribute("max")) {
 				this.myPetit.finishAll();
 				return false;
