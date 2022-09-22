@@ -61,7 +61,7 @@
 					 {"transform":"translateX(90vw) rotate(2700deg)", "kft":160}
 			]
 		 },{ 
-			"sel":"#spring", 
+			"sel":"#springs", 
 			"kf": [
 					 {"kft":75},
 					 {"kft":95},
@@ -70,7 +70,7 @@
 					 {"kft":155}
 			]
 		},{ 
-			"sel":"#waterdrop", 
+			"sel":"#waterdrops", 
 			"kf": [
 					 {"kft":0},
 					 {"kft":20},
@@ -79,7 +79,7 @@
 					 {"kft":80}
 				]
 		},{ 
-			"sel":"#counting", 
+			"sel":"#countings", 
 			"kf": [
 					 {"kft":0}
 				]

@@ -44,6 +44,33 @@
 				  --playerbuttontext: white;
 				}
 				
+				#demo-player-2 #petit-controls {
+					 display: inline-block;
+					 flex-wrap: wrap;
+					 justify-content: space-between;
+					 align-items: center;
+					 margin: 5px 0;
+					 padding: 0;
+				}
+				#demo-player-2 #petit-controls li {
+					 display: block;
+					 padding: 15px 5px;
+					 float: left;
+
+				}
+				#demo-player-2  #petit-controls button {
+					border-radius: 4px;
+				}
+				#demo-player-2 .scrubbar {
+    				display: inline;
+				}
+				#demo-player-2 input[type="range"] {
+				  width: 100%;
+				  padding: 0;
+				  margin: 0;
+				}
+				
+				
 		</style>
 	</head>
 	<body>
@@ -68,7 +95,15 @@
 		
 		<h2>Demo 2 </h2>
 		<petit-player id="demo-player-2" muted src="../demo.json" autoplay loop>
-			<section slot="aftercontrols">
+			
+			<section slot="uppercontrols">
+				<ul id="petit-controls">
+					<li><button class="playb">&#62;</button></li>
+					<li><button class="muted">&#x1f507;</button></li>
+					<li><button class="debug">?</button></li>
+				</ul>
+			</section>
+			<section>
 				<div id="line"></div>
 				<div class="triangle"></div>
 				<div class="triangle"></div>
@@ -77,10 +112,13 @@
 				<div id="hexagone">
 					<div id="hexablink"></div>
 				</div>
-				<audio preload="auto" id="space" src="./space.mp3"></audio>	
-				<audio preload="auto" id="spring" src="./spring.mp3"></audio>
-				<audio preload="auto" id="waterdrop" src="./waterdrop.mp3"></audio>
-				<audio preload="auto" id="counting" src="./counting.mp3">https://soundbible.com/2008-0-9-Male-Vocalized.html @: Mike Koenig License: Attribution 3.0</audio>			
+				<audio preload="auto" id="spaces" src="./space.mp3"></audio>	
+				<audio preload="auto" id="springs" src="./spring.mp3"></audio>
+				<audio preload="auto" id="waterdrops" src="./waterdrop.mp3"></audio>
+				<audio preload="auto" id="countings" src="./counting.mp3">https://soundbible.com/2008-0-9-Male-Vocalized.html @: Mike Koenig License: Attribution 3.0</audio>			
+			</section>
+			<section slot="lowercontrols">
+								<div class="scrubbar"><input type="range" value="0" min="0" step="1" class="scrub" /></div>
 			</section>
 		</petit-player>
 		<script type="module" src="/main.js"></script>

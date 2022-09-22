@@ -1,5 +1,6 @@
 import PetitAudio from './PetitAudio.js'  	
 import Petit from 'petitjs'
+import {version as playerversion}  from '../package.json';
 
 /*function isNumeric(str) {
 	if (typeof str != "string") return false 
@@ -16,6 +17,7 @@ export class PetitPlayer extends HTMLElement{
 
 	}
 	connectedCallback() {	
+	//TODO move constrols as slot default
 		const templateString = `
 			<style>
 
@@ -50,15 +52,18 @@ export class PetitPlayer extends HTMLElement{
 					flex:1;
 				}
 			</style>
+			<slot name="uppercontrols"></slot>
 			<p class="support">Requires native Web Animation Support (latest Firefox, Chrome, Opera)</p>
 			<slot></slot>
-			<ul id="petit-controls">
-				<li><button class="playb">&#62;</button></li>
-				<li class="scrubbar"><input type="range" value="0" min="0" step="1" class="scrub" /></li>
-				<li><button class="muted">&#x1f507;</button></li>
-				<li><button class="debug">?</button></li>
-			</ul>
-			<slot name="aftercontrols"></slot>
+
+			<slot id="slot-petit-controls" name="lowercontrols">
+				<ul id="petit-controls">
+					<li><button class="playb">&#62;</button></li>
+					<li class="scrubbar"><input type="range" value="0" min="0" step="1" class="scrub" /></li>
+					<li><button class="muted">&#x1f507;</button></li>
+					<li><button class="debug">?</button></li>
+				</ul>
+			</slot>
 		`;
 		const template = document.createElement('template');
 		template.innerHTML = templateString;
@@ -72,8 +77,100 @@ export class PetitPlayer extends HTMLElement{
 				  --playerbuttontext: white;
 				}
 		*/
-		this.version="0.0.3";	
-		this.getSrc();		
+		//this.version="0.0.6";	
+		this.version=playerversion;	
+	
+		this.playButton = this.querySelector(".playb") || this.shadowRoot.querySelector(".playb");
+		this.scrub = this.querySelector(".scrub") || this.shadowRoot.querySelector(".scrub"); 
+		this.scrub.value=0;
+		this.muted= this.getAttribute("muted");
+		
+		this.getSrc();		//get the json
+		
+		this.playButton.addEventListener("mouseup", (e) => {
+			if(this.myPetit.isPlaying) {
+				this.myPetit.pauseAll();
+			}
+			else {
+				this.play()
+			}
+		});
+		this.shadowRoot.querySelector(".debug").addEventListener("mouseup", (e) => {
+			prompt('Petit Player \nplease report bugs with your petit file and the following info :', 'Petit version :'+this.myPetit.version+'\nPlayer version :'+this.version+'\nBrowser'+navigator.userAgent);
+		});
+
+		this.mutedButton =  this.querySelector(".muted") || this.shadowRoot.querySelector(".muted");
+		this.mutedButton.addEventListener("mouseup", (e) => {
+			if(this.muted){
+				this.unmute();
+				//this.setAttribute("muted", false);
+			}
+			else {
+				this.mute();
+				//this.setAttribute("muted", true);
+			}
+		});
+		if(this.muted!=null){
+				this.mute()
+		}
+		this.addEventListener("play", ()=>{
+			this.playButton.innerHTML = "II";
+		});	
+		this.addEventListener("pause", ()=>{
+			this.playButton.innerHTML = ">";
+		});
+		this.addEventListener("ended", ()=>{
+			this.playButton.innerHTML = ">";
+		});
+				
+		//Check for support... You can use the polyfill so this won't actually be triggered
+		if (!document.body.animate) {
+		  this.shadowRoot.querySelector(".support").classList.add("unsupported");
+		}
+
+		//when the input range ("scrubber") is adjusted, pause the animations and change the `currentTime` property
+		this.scrub.addEventListener('input', e => {
+			console.log('input', e.currentTarget.value);
+			var time = e.currentTarget.value;
+			
+			this.myPetit.animations.forEach(animation => {
+				animation.currentTime = time;
+			});
+			if(!this.myPetit.isPlaying) {
+				this.myPetit.pauseAll();
+			}
+		});
+		//When the user finalizes the value for input range ("scrubber")... 
+		this.scrub.addEventListener("change", (e) => {
+			console.log("change", e.currentTarget.value);
+			if (this.myPetit.animations[0].currentTime >= e.currentTarget.getAttribute("max")) {
+				this.myPetit.finishAll();
+				return false;
+			}
+			this.dispatchEvent(
+				new CustomEvent("rebase")
+			);	
+			this.dispatchEvent(
+				new CustomEvent("changescrub", {detail:{time : parseInt(this.scrub.value)}})
+			);		
+			this.adjustScrubber();
+			if (this.myPetit.isPlaying) {
+				this.myPetit.playAll();
+			}
+		});
+		if(this.getAttribute("controls")!=null && this.getAttribute("controls")=="false"){
+			//this.shadowRoot.querySelector("#petit-controls").style.display = 'none';
+			this.showControls();
+		}
+		
+
+		if(this.getAttribute("loop")!=null){
+			this.addEventListener("ended",  this.play);
+		}
+
+		
+		
+		
 	}
 	getSrc() {
 		let src = this.getAttribute("src");	
@@ -98,100 +195,16 @@ export class PetitPlayer extends HTMLElement{
 			this.myPetit =  new Petit(this, petit);
 			
 			this.timer = null;
-
-			this.playButton = this.shadowRoot.querySelector(".playb");
-			this.scrub = this.shadowRoot.querySelector(".scrub");
-			this.scrub.value=0;
 			this.scrub.max = petit.op * this.myPetit.normalSpeed
-			this.playButton.addEventListener("mouseup", (e) => {
-				if(this.myPetit.isPlaying) {
-					this.myPetit.pauseAll();
-				}
-				else {
-					this.play()
-				}
-			});
-			this.shadowRoot.querySelector(".debug").addEventListener("mouseup", (e) => {
-				prompt('Petit Player \nplease report bugs with your petit file and the following info :', 'Petit version :'+this.myPetit.version+'\nPlayer version :'+this.version+'\nBrowser'+navigator.userAgent);
-			});
-			this.muted= this.getAttribute("muted");
-			this.mutedButton = this.shadowRoot.querySelector(".muted");
-			this.mutedButton.addEventListener("mouseup", (e) => {
-				if(this.muted){
-					//this.unmute();
-					this.setAttribute("muted", false);
-				}
-				else {
-					//this.mute();
-					this.setAttribute("muted", true);
-				}
-			});
-			if(this.muted!=null){
-					this.mute()
-			}
-			this.addEventListener("play", ()=>{
-				this.playButton.innerHTML = "II";
-			});	
-			this.addEventListener("pause", ()=>{
-				this.playButton.innerHTML = ">";
-			});
-			this.addEventListener("ended", ()=>{
-				this.playButton.innerHTML = ">";
-			});
-					
-			//Check for support... You can use the polyfill so this won't actually be triggered
-			if (!document.body.animate) {
-			  this.shadowRoot.querySelector(".support").classList.add("unsupported");
-			}
-
-			//when the input range ("scrubber") is adjusted, pause the animations and change the `currentTime` property
-			this.scrub.addEventListener('input', e => {
-				console.log('input', e.currentTarget.value);
-				var time = e.currentTarget.value;
-				
-				this.myPetit.animations.forEach(animation => {
-					animation.currentTime = time;
-				});
-				if(!this.myPetit.isPlaying) {
-					this.myPetit.pauseAll();
-				}
-			});
-			//When the user finalizes the value for input range ("scrubber")... 
-			this.scrub.addEventListener("change", (e) => {
-				console.log("change", e.currentTarget.value);
-				if (this.myPetit.animations[0].currentTime >= e.currentTarget.getAttribute("max")) {
-					this.myPetit.finishAll();
-					return false;
-				}
-				this.dispatchEvent(
-					new CustomEvent("rebase")
-				);	
-				this.dispatchEvent(
-					new CustomEvent("changescrub", {detail:{time : parseInt(this.scrub.value)}})
-				);		
-				this.adjustScrubber();
-				if (this.myPetit.isPlaying) {
-					this.myPetit.playAll();
-				}
-			});
-			if(this.getAttribute("autoplay")!=null){
-				this.play();
-			}
-			if(this.getAttribute("controls")!=null && this.getAttribute("controls")=="false"){
-				//this.shadowRoot.querySelector("#petit-controls").style.display = 'none';
-				this.showControls();
-			}
 			
-			if(this.getAttribute("loop")!=null){
-				this.addEventListener("ended",  this.play);
-			}
-			//this.poster = ( ? this.getAttribute("poster") : ( ? : ) )  ;
-			if(this.getAttribute("poster")!=null/* && isNumeric(this.poster)*/){
+
+			if(this.getAttribute("poster")!=null){
 				this.myPetit.setPoster(this.getAttribute("poster"))
 			}
-			
-			
-			
+			if(this.getAttribute("autoplay")!=null){
+			this.play();
+		}
+
 			
 		}).catch((error) => {
 			console.log(error);
@@ -227,6 +240,7 @@ export class PetitPlayer extends HTMLElement{
 			shadowError.textContent = message;
 			this.shadowRoot.appendChild (shadowError);
 	}
+	//TODO backward forward
 	play(){
 		/*if(this.poster!=null && isNumeric(this.poster) && this.scrub.value==0){
 			this.myPetit.animations.forEach(animation => {
@@ -325,10 +339,9 @@ poster	int	Specifies an frame to be shown until the user hits the play button
 						this.pause();
 					}
 				break;
-				//TODO set poster in petit.json
+
 				case 'poster':
-					if(newValue/* && isNumeric(newValue)*/){
-						//this.poster=newValue;
+					if(newValue ){
 						this.myPetit.setPoster(newValue);
 					}	
 				break;

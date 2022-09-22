@@ -40,10 +40,19 @@ export default class PetitAudio {
    	petitPlayer.addEventListener("unmute", ()=>{
 			this.muteAll(false);
 		});		
+  		petitPlayer.addEventListener("canplay", ()=>{
+  			console.log('canplay', petitPlayer.muted );
+	  		if (petitPlayer.muted != null) {
+				this.muteAll(true);
+		   }
+		});	
+		
 	}
 	muteAll(bool){
+		console.log('muteAll', bool);
 		this.audioArray.forEach((audio) => {
 			audio.el.muted = bool;
+			console.log(audio.el.id, audio.el.muted);
   		});
 	}
 	rebaseAll() { 
